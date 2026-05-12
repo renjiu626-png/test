@@ -1,17 +1,8 @@
-name: Export Unstructured Image
-on: [workflow_dispatch]
+- name: Save Image to Tar
+        run: docker save downloads.unstructured.io/unstructured-io/unstructured-api:latest -o unstructured.tar
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Pull Image
-        run: docker pull downloads.unstructured.io/unstructured-io/unstructured-api:latest
-      - name: Save Image to Tar
-        run: docker save downloads.unstructured.io/unstructured-io/unstructured-api:latest -o unstructured_api.tar
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: unstructured-image-tar
-          path: unstructured_api.tar
-          retention-days: 1
+          name: unstructured-api-package  # 这是下载时的名字
+          path: unstructured.tar          # 必须和上面 -o 后面的名字一致
